@@ -31,4 +31,7 @@ sudo bash -c "echo \"extension=libsodium.so\" >> /etc/php5/mods-available/libsod
 sudo php5enmod libsodium
 cd .. # cd libsodium-php
 
+curl https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+
 popd
