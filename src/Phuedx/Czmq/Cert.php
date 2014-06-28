@@ -61,4 +61,10 @@ class Cert
     {
         return $this->publicTxt == $cert->publicTxt && $this->secretTxt == $cert->secretTxt;
     }
+
+    public function apply(\ZMQSocket $socket)
+    {
+        $socket->setSockOpt(\ZMQ::SOCKOPT_CURVE_SECRETKEY, $this->secretKey);
+        $socket->setSockOpt(\ZMQ::SOCKOPT_CURVE_PUBLICKEY, $this->publicKey);
+    }
 }

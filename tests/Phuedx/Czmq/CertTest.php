@@ -51,4 +51,19 @@ class CertTest extends \PHPUnit_Framework_TestCase
         $cert2 = clone $cert1;
         $this->assertTrue($cert1->equals($cert2));
     }
+
+    public function test_apply_sets_the_secret__and_publickey_socket_option()
+    {
+        $cert = new Cert();
+        $socket = $this->getMockBuilder('\\ZMQSocket')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $socket->expects($this->exactly(2))
+            ->method('setSockOpt')
+            ->withConsecutive(
+                array(\ZMQ::SOCKOPT_CURVE_SECRETKEY, $cert->getSecretKey()),
+                array(\ZMQ::SOCKOPT_CURVE_PUBLICKEY, $cert->getPublicKey())
+            );
+        $cert->apply($socket);
+    }
 }
